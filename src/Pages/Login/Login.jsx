@@ -25,15 +25,27 @@ function LoginPage() {
 
     
     const SubmittedFunction = () => {
-        axios.get("http://localhost/cgapi/getnotes.php").then(res=>setTable(res.data))
+        axios.post("http://192.168.100.2:80/cgapi/auth/login.php",{
+                email: document.querySelector("#email").value, 
+                password: document.querySelector("#password").value}
+            ).
+            then(res=>{
+                console.log(res.data);
+                if (res.data == true) {
+                    window.location.replace('/');
+                }
+                else {
+                    console.log("Login error");
+                }
+            });
     }
     return (
-        <form>
+        <form method="post">
             <h1>Login</h1>
-            <InputBlock name="Username" changed={changedFunction} 
-                        pattern="^[A-Za-z0-9]{3,16}$"/>
-            <InputBlock name="Password" changed={changedFunction}/>
-            <button type="button" onClick={SubmittedFunction}>d{Table}</button>
+            <InputBlock name="email" changed={changedFunction} 
+                        pattern="^[A-Za-z0-9]{3,16}$" value="admin@gmail.com" />
+            <InputBlock name="password" changed={changedFunction} value="admin" />
+            <button type="button" onClick={SubmittedFunction}>{Table}</button>
         </form>
 
     )
