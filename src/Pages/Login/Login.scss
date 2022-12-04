@@ -1,0 +1,50 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-decoration: none;
+}
+
+.MainPanel {
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-self: center;
+    height: 60%;
+    width: 55%;
+    border: 0px solid #888;
+    border-radius: 8px;
+    box-shadow: 0 3px 5px 0 rgba(0,0,0,0.5);
+    overflow: auto;
+    img {
+        height: 100%;
+    }
+    form {
+        background-color: transparent;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        
+        width: 100%;
+        padding: 25px;
+        * {
+            padding-bottom: 5px;
+            background-color: transparent;
+            text-align: start;
+            width: 100%;
+        }
+
+        h1 {
+            width: 100%;
+            text-align: center;
+        }
+        input {
+            margin-bottom: 10px;
+        }
+    }
+}
+
+.LoginForm {
+    padding-left: 10px;
+}

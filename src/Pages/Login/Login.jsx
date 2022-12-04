@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import $ from 'jquery'
 import axios from 'axios'
-
+import './Login.scss'
 // window.location.replace('http://auth.w3schools.com');
 
 import InputBlock from './InputBlock'
@@ -24,14 +24,14 @@ function LoginPage() {
       };
 
     
-    const SubmittedFunction = () => {
+    const SubmittedFunction = () => {d
         axios.post("http://192.168.100.2:80/cgapi/auth/login.php",{
                 email: document.querySelector("#email").value, 
                 password: document.querySelector("#password").value}
             ).
-            then(res=>{
-                console.log(res.data);
-                if (res.data == true) {
+            then(response => {
+                console.log(response.data);
+                if (response.data == true) {
                     window.location.replace('/');
                 }
                 else {
@@ -40,14 +40,17 @@ function LoginPage() {
             });
     }
     return (
-        <form method="post">
-            <h1>Login</h1>
-            <InputBlock name="email" changed={changedFunction} 
-                        pattern="^[A-Za-z0-9]{3,16}$" value="admin@gmail.com" />
-            <InputBlock name="password" changed={changedFunction} value="admin" />
-            <button type="button" onClick={SubmittedFunction}>{Table}</button>
-        </form>
-
+        <span class="MainPanel">
+            
+            <img src="src\assets\img\316243177_854245752381535_6906148811205586753_n.jpg" alt="" />
+            <form class="LoginForm" method="post">
+                <h1>Login</h1>
+                <InputBlock name="email" changed={changedFunction} 
+                            pattern="^[A-Za-z0-9]{3,16}$" value="admin@gmail.com" label="Email" />
+                <InputBlock name="password" changed={changedFunction} value="admin" label="Password" />
+                <button type="button" onClick={SubmittedFunction}>{Table}</button>
+            </form>
+        </span>
     )
 }
 
