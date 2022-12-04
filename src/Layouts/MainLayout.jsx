@@ -5,7 +5,7 @@ import './MainLayout.scss'
 function MainLayoutPage() {
     const [count, setCount] = useState(0)
     return (
-        <div class="container">
+        <div className="container">
             <Outlet />
         </div>
     )

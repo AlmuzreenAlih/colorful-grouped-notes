@@ -5,7 +5,7 @@ const InputBlock = (props) => {
     return (
         <div>
             <label>{props.label}</label>
-            <input {...props} />
+            <input id={props.name} name={props.name} onChange={props.changed} pattern={props.pattern} value={props.value} />
         </div>
     )
 }
