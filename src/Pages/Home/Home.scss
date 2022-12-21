@@ -1,0 +1,44 @@
+.NoteGroups {
+    background-color: transparent;
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    height: 100%;
+    width: 100%;
+}
+
+.NoteGroup {
+    background-color: transparent;
+    display: flex;
+    justify-content: start;
+
+    background-color: transparent;
+    height: 100%;
+    width: 300px;
+    padding: 2em;
+
+    border: 1px solid #888;
+    box-shadow: 0 3px 5px 0 rgba(0,0,0,0.5);
+
+    input {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}
+
+.Note {
+    background-color: lightblue;
+    display: flex;
+    align-items: start;
+    justify-content: flex-start;
+    border: 1px solid #888;
+    border-radius: 8px;
+    box-shadow: 0 3px 5px 0 rgba(0,0,0,0.5);
+    width: 100%;
+
+    textarea {
+        width: 100%;
+        padding: 2px;
+        height: auto;
+    }
+}
