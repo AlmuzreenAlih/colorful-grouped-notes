@@ -1,4 +1,4 @@
-.NoteGroups {
+.AllNotes {
     background-color: transparent;
     display: flex;
     flex-direction: row;
@@ -8,14 +8,12 @@
 }
 
 .NoteGroup {
-    background-color: transparent;
+    background-color: blue;
     display: flex;
     justify-content: start;
-
-    background-color: transparent;
     height: 100%;
     width: 300px;
-    padding: 2em;
+    padding: 1em;
 
     border: 1px solid #888;
     box-shadow: 0 3px 5px 0 rgba(0,0,0,0.5);
@@ -37,8 +35,14 @@
     width: 100%;
 
     textarea {
+        background-color: transparent;
         width: 100%;
         padding: 2px;
         height: auto;
+        border: 0px;
     }
+
+    // textarea:focus, input:focus{
+    //     outline: none;
+    // }
 }
