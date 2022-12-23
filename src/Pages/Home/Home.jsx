@@ -13,9 +13,9 @@ function HomePage() {
     ];
     const notes = [
         { id: 1, group: 'Group 1', title: 'Note 1', backgroundColor: 'blue', content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit sed quidem minima magnam laudantium ad qui alias vel voluptates iste, quod reprehenderit architecto ipsum quibusdam quisquam officiis omnis rem! Ab?' },
-        { id: 2, group: 'Group 1', title: 'Note 2', backgroundColor: 'blue', content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit sed quidem minima magnam laudantium ad qui alias vel voluptates iste, quod reprehenderit architecto ipsum quibusdam quisquam officiis omnis rem! Ab?' },
-        { id: 3, group: 'Group 2', title: 'Note 1A', backgroundColor: 'blue', content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit sed quidem minima magnam laudantium ad qui alias vel voluptates iste, quod reprehenderit architecto ipsum quibusdam quisquam officiis omnis rem! Ab?' },
-        { id: 4, group: 'Group 3', title: 'Note 1B', backgroundColor: 'blue', content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit sed quidem minima magnam laudantium ad qui alias vel voluptates iste, quod reprehenderit architecto ipsum quibusdam quisquam officiis omnis rem! Ab?' },
+        { id: 2, group: 'Group 1', title: 'Note 2', backgroundColor: 'blue', content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum fugit illo non cum vitae sed dicta dolores? Maxime a explicabo facilis, reiciendis odit doloribus voluptatem.' },
+        { id: 3, group: 'Group 2', title: 'Note 1A', backgroundColor: 'blue', content: 'Lorem ipsum dolor sit amet cLorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum fugit illo non cum vitae sed dicta dolores? Maxime a explicabo facilis, reiciendis odit doloribus voluptatem.o ipsum quibusdam quisquam officiis omnis rem! Ab?' },
+        { id: 4, group: 'Group 3', title: 'Note 1B', backgroundColor: 'blue', content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. SuLorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum fugit illo non cum vitae sed dicta dolores? Maxime a explicabo facilis, reiciendis odit doloribus voluptatem.rem! Ab?' },
     ];
 
     /////////////////////////////////// PARTIALS ////////////////////////////////////////////////////////////
@@ -41,15 +41,32 @@ function HomePage() {
             </div>
         );
     }
-
     //--------------------------------------------------------------------------------------------------------
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     useEffect(() => {
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+      }, []);
+    
+      function handleResize() {
+        setWindowWidth(window.innerWidth);
+      }
+    
+    useEffect(() => {
+        console.log("hello");
         const textareaElements = document.querySelectorAll('textarea');
         textareaElements.forEach((textarea) => {
-            textarea.style.height = 'auto';
             textarea.style.height = textarea.scrollHeight + 'px';
         });
     }, []);
+    const [iii,setiii] = useState(0);
+    useEffect(() => {
+        const textareaElements = document.querySelectorAll('textarea');
+        textareaElements.forEach((textarea) => {
+            textarea.style.height = textarea.scrollHeight + 'px';
+        });
+        console.log(iii);
+    }, [window.innerWidth]);
 
     function adjustTextareaHeight(e) {
         e.target.style.height = 'auto';
@@ -60,7 +77,7 @@ function HomePage() {
         return (
             <div className='Note'>
                 <h2>{props.title}</h2>
-                <textarea onChange={adjustTextareaHeight}>{props.content}</textarea>
+                <textarea spellcheck="false" onChange={adjustTextareaHeight}>{props.content}</textarea>
             </div>
         )
     }

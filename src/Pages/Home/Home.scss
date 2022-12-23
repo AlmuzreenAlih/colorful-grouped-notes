@@ -33,6 +33,7 @@
     border-radius: 8px;
     box-shadow: 0 3px 5px 0 rgba(0,0,0,0.5);
     width: 100%;
+    padding: 10px;
 
     textarea {
         background-color: transparent;
@@ -40,9 +41,11 @@
         padding: 2px;
         height: auto;
         border: 0px;
+        overflow: hidden;
+        resize: none;
     }
 
-    // textarea:focus, input:focus{
-    //     outline: none;
-    // }
+    textarea:focus, input:focus{
+        outline: none;
+    }
 }
