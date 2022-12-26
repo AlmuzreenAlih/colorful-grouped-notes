@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect,inputRef } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { useRef } from 'react';
 import React from 'react';
@@ -26,6 +26,7 @@ function HomePage() {
             {groups.map(group => (
                 <NoteGroupComponent key={group.id} backgroundColor={group.backgroundColor} title={group.title} />
                 ))}
+                
             </div>
         )
     }
@@ -45,61 +46,51 @@ function HomePage() {
         );
     }
     //Note --------------------------------------------------------------------------------------------------------  
-    // const [scrollTop, setScrollTop] = useState(0);
-    // function HANDLE_Scroll() {setScrollTop(window.pageYOffset);}
-    // const [scrollTop, setScrollTop] = useState(0);
-    // console.log("render")
-    // useEffect(() => {///////////////////////////////////////////////////////////Setup
-    //     const NoteElems = document.querySelectorAll('.Note');
-    //     var isVisible;
-    //     NoteElems.forEach((noteElem) => {
-    //         isVisible = noteElem.offsetTop > window.pageYOffset &&
-    //             noteElem.offsetTop + noteElem.style.height < window.pageYOffset + window.innerHeight;
-    //         if (isVisible == true) {
-    //         // alert(noteElem.querySelectorAll('.title')[0].offsetTop)
-    //         // console.log(noteElem.querySelectorAll('.title')[0].value, noteElem.offsetTop, noteElem.offsetHeight, window.innerHeight)
-    //             noteElem.style.opacity = 1;
-    //         }
-    //         else {
-    //             noteElem.style.opacity = 0;
-    //         }
-            
-    //     });
-    //     window.addEventListener('scroll', HANDLE_Scroll);
-    //     return () => window.removeEventListener('scroll', HANDLE_Scroll);
-    // }, [scrollTop]);
-    
-    useEffect(() => {///////////////////////////////////////////////////////////Setup
-        // const textareaElements = document.querySelectorAll('textarea');
-        // textareaElements.forEach((textarea) => {
-        //     textarea.style.height = textarea.scrollHeight + 'px';
-        // });
-    }, []);
-    
-    const [windowWidth, setWindowWidth] = useState(window.innerWidth); //////////On Resize
-    function handleResize() {
-        setWindowWidth(window.innerWidth);
-    }
-    useEffect(() => {
-        // alert("Window Width")
-
-        const textareaElements = document.querySelectorAll('textarea');
-        textareaElements.forEach((textarea) => {
-            textarea.style.height = textarea.scrollHeight + 'px';
-        });
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-    }, [windowWidth]); //For some reason, pwede window.innerWidth dito
-
-    function adjustTextareaHeight(e) {///////////////////////////////////////////onChange of text area
-        alert("Hello")
-        
-        e.target.style.height = e.target.scrollHeight + 'px';
-    }
-
     function NoteComponent(props) {
+        const [scrollTop, setScrollTop] = useState(0); ////////////////////////////SCROLLING
+        const divRef = useRef(null);
+        const [taHeight, setTaHeight] = useState(0) ///////////////////////////////TEXTAREA
+        const taRef = useRef(null);
+
+        function HANDLE_Scroll() {///////////////////// kgjsflkdjglfkd test mo muna handler, clg
+            console.log(window.pageYOffset)
+            setScrollTop(window.pageYOffset);
+        }
+
+        useEffect(() => {   
+            setTimeout(() => {
+                var isVisible = ((taRef.current.offsetTop > window.pageYOffset && taRef.current.offsetTop < window.pageYOffset + window.innerHeight) ||
+                            (taRef.current.offsetTop + taRef.current.offsetHeight > window.pageYOffset && taRef.current.offsetTop + taRef.current.offsetHeight < window.pageYOffset + window.innerHeight))
+                
+                if (isVisible == true) {
+                    console.log("object");
+                    divRef.current.style.opacity = 1;
+                } else {
+                    var xxx = Array.prototype.indexOf.call(divRef.current.parentNode.children, divRef.current)+1
+                    if (xxx != divRef.current.parentNode.children.length) {
+                        if (divRef.current.parentNode.children[xxx].style.opacity != 1) {
+                            divRef.current.style.opacity = 0;
+                        }
+                    }
+                    else{
+                        divRef.current.style.opacity = 0;
+                    }
+                }
+            }, 100);
+            window.addEventListener('scroll', HANDLE_Scroll);
+            return () => window.removeEventListener('scroll', HANDLE_Scroll);
+        }, [scrollTop, taHeight]);
+
+        useEffect(() => {/////////////////////////////////////////////////.........setup
+            setTaHeight(taRef.current.scrollHeight + 'px') 
+        }, [])
+        
+        function adjustTextareaHeight(e) {///////////////////////////////..........onChange textarea content
+            setTaHeight(e.target.scrollHeight + 'px')
+        }
+    
         return (
-            <div className='Note'>
+            <div ref={divRef} style={{opacity: 0}} className='Note'>
                 <div>
                     <input className='title' defaultValue={props.title} />
                     <div>
@@ -107,15 +98,34 @@ function HomePage() {
                     </div>
                 </div>
                 
-                <textarea spellCheck="false" onChange={adjustTextareaHeight} defaultValue={props.content}></textarea>
+                <textarea ref={taRef} spellCheck="false" onChange={adjustTextareaHeight} defaultValue={props.content} 
+                style={{height: taHeight}} />
             </div>
         )
     }
 
+    
+    // const [windowWidth, setWindowWidth] = useState(window.innerWidth); //////////On Resize
+    // function handleResize() {
+    //     setWindowWidth(window.innerWidth);
+    // }
+    // useEffect(() => {
+    //     const textareaElements = document.querySelectorAll('textarea');
+    //     textareaElements.forEach((textarea) => {
+    //         textarea.style.height = textarea.scrollHeight + 'px';
+    //     });
+    //     window.addEventListener('resize', handleResize);
+    //     return () => window.removeEventListener('resize', handleResize);
+    // }, [windowWidth,scrollTop]); //For some reason, pwede window.innerWidth dito
+   
+
     //////////////////////////////////////// MAIN RETURN ////////////////////////////////////////////////////////
     return (
         <MainComponent />
+        
     );
 }
+
+
 
 export default HomePage;
