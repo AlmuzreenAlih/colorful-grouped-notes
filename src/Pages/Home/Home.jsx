@@ -12,10 +12,16 @@ function HomePage() {
         { id: 3, title: 'Group 3', backgroundColor: 'rgb(250,190,190)' },
     ];
     var notes = [
-        { id: 1, group: 'Group 1', title: 'Note 1', backgroundColor: 'blue', content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit sed quidem minima magnam laudantium ad qui alias vel voluptates iste, quod reprehenderit architecto ipsum quibusdam quisquam officiis omnis rem! Ab?' },
-        { id: 2, group: 'Group 1', title: 'Note 2', backgroundColor: 'blue', content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum fugit illo non cum vitae sed dicta dolores? Maxime a explicabo facilis, reiciendis odit doloribus voluptatem.' },
-        { id: 3, group: 'Group 1', title: 'Note 1A', backgroundColor: 'blue', content: 'Lorem ipsum dolor sit amet cLorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum fugit illo non cum vitae sed dicta dolores? Maxime a explicabo facilis, reiciendis odit doloribus voluptatem.o ipsum quibusdam quisquam officiis omnis rem! Ab?' },
-        { id: 4, group: 'Group 1', title: 'Note 1B', backgroundColor: 'blue', content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. SuLorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum fugit illo non cum vitae sed dicta dolores? Maxime a explicabo facilis, reiciendis odit doloribus voluptatem.rem! Ab?' },
+        { id: 1, group: 'Group 1', title: 'Note 1', backgroundColor: '#e23423', content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit sed quidem minima magnam laudantium ad qui alias vel voluptates iste, quod reprehenderit architecto ipsum quibusdam quisquam officiis omnis rem! Ab?' },
+        { id: 2, group: 'Group 1', title: 'Note 2', backgroundColor: '#e23423', content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum fugit illo non cum vitae sed dicta dolores? Maxime a explicabo facilis, reiciendis odit doloribus voluptatem.' },
+        { id: 3, group: 'Group 1', title: 'Note 1A', backgroundColor: '#e23423', content: 'Lorem ipsum dolor sit amet cLorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum fugit illo non cum vitae sed dicta dolores? Maxime a explicabo facilis, reiciendis odit doloribus voluptatem.o ipsum quibusdam quisquam officiis omnis rem! Ab?' },
+        { id: 4, group: 'Group 1', title: 'Note 1B', backgroundColor: '#e23423', content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. SuLorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum fugit illo non cum vitae sed dicta dolores? Maxime a explicabo facilis, reiciendis odit doloribus voluptatem.rem! Ab?' },
+        { id: 1, group: 'Group 2', title: 'Note 1', backgroundColor: '#e23423', content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Susciem ipsum dolor sit amet cLorem ipsum dolor sit amet cLorem ipsum dolor sit amet cLorem ipsum dolor sit amet cLorem ipsum dolor sit amet cLorem ipsum dolor sit amet cLorem ipsum dolor sit amet cLorpit sed quidem minima magnam laudantium ad qui alias vel voluptates iste, quod reprehenderit architecto ipsum quibusdam quisquam officiis omnis rem! Ab?' },
+        { id: 2, group: 'Group 2', title: 'Note 2', backgroundColor: '#e23423', content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum fugit illo non cum vitae sed dicta dolores? Maxime a explicabo facilis, reiciendis odit doloribus voluptatem.' },
+        { id: 3, group: 'Group 3', title: 'Note 1A', backgroundColor: '#e23423', content: 'Lorem ipsum dolor sit amet cLorem ipsum dolor sit amet cLorem ipsum dolor sit amet cLorem ipsum dolor sit amet cLoremfffffffffffffhfghgggggggggggggggg ipsum dolor sit amet consectetur adipisicing elit. Nostrum fugit illo non cum vitae sed dicta dolores? Maxime a explicabo facilis, reiciendis odit doloribus voluptatem.o ipsum quibusdam quisquam officiis omnis rem! Ab?' },
+        { id: 4, group: 'Group 3', title: 'Note 1B', backgroundColor: '#e23423', content: 'Lorem ipsum dolor sit amet consectem ipsum dolor sit amet cLorem ipsum dolor sit amet cLorem ipsum dolor sit amet cLorem ipsum dolor sit amet cLoretur adipisicing elit. SuLorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum fugit illo non cum vitae sed dicta dolores? Maxime a explicabo facilis, reiciendis odit doloribus voluptatem.rem! Ab?' },
+        { id: 4, group: 'Group 3', title: 'Note 1B', backgroundColor: '#e23423', content: 'Lorem ipsum dolor sit amet consectem ipsum dolor sit amet cLorem ipsum dolor sit amet cLorem ipsum dolor sit amet cLorem ipsum dolor sit amet cLoretur adipisicing elit. SuLorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum fugit illo non cum vitae sed dicta dolores? Maxime a explicabo facilis, reiciendis odit doloribus voluptatem.rem! Ab?' },
+        { id: 4, group: 'Group 3', title: 'Note 1B', backgroundColor: '#e23423', content: 'Lorem ipsum dolor sit amet consectem ipsum dolor sit amet cLorem ipsum dolor sit amet cLorem ipsum dolor sit amet cLorem ipsum dolor sit amet cLoretur adipisicing elit. SuLorem ipsudfhfghgfhgfgm dolor sit amet consectetur adipisicing elit. Nostrum fugit illo non cum vitae sed dicta dolores? Maxime a explicabo facilis, reiciendis odit doloribus voluptatem.rem! Ab?' },
     ];
 
     /////////////////////////////////// PARTIALS ////////////////////////////////////////////////////////////
@@ -47,39 +53,37 @@ function HomePage() {
     }
     //Note --------------------------------------------------------------------------------------------------------  
     function NoteComponent(props) {
-        const [scrollTop, setScrollTop] = useState(0); ////////////////////////////SCROLLING
+        const [scrolledTop, setScrolledTop] = useState(0); ////////////////////////////SCROLLING
         const divRef = useRef(null);
         const [taHeight, setTaHeight] = useState(0) ///////////////////////////////TEXTAREA
         const taRef = useRef(null);
 
         function HANDLE_Scroll() {///////////////////// kgjsflkdjglfkd test mo muna handler, clg
-            console.log(window.pageYOffset)
-            setScrollTop(window.pageYOffset);
+            // console.log(window.pageYOffset)
+            setScrolledTop(divRef.current.parentNode.scrollTop);
         }
 
         useEffect(() => {   
+            var mainWindow = divRef.current.parentNode
             setTimeout(() => {
-                var isVisible = ((taRef.current.offsetTop > window.pageYOffset && taRef.current.offsetTop < window.pageYOffset + window.innerHeight) ||
-                            (taRef.current.offsetTop + taRef.current.offsetHeight > window.pageYOffset && taRef.current.offsetTop + taRef.current.offsetHeight < window.pageYOffset + window.innerHeight))
+                //innerheight = offsetheight, pageyoffset = scrolltop
+                var isVisible = ((taRef.current.offsetTop > mainWindow.scrollTop && taRef.current.offsetTop < mainWindow.scrollTop + mainWindow.offsetHeight) ||
+                            (taRef.current.offsetTop + taRef.current.offsetHeight > mainWindow.scrollTop && taRef.current.offsetTop + taRef.current.offsetHeight < mainWindow.scrollTop + mainWindow.offsetHeight))
                 
                 if (isVisible == true) {
-                    console.log("object");
+                    console.log("first")
                     divRef.current.style.opacity = 1;
                 } else {
-                    var xxx = Array.prototype.indexOf.call(divRef.current.parentNode.children, divRef.current)+1
-                    if (xxx != divRef.current.parentNode.children.length) {
-                        if (divRef.current.parentNode.children[xxx].style.opacity != 1) {
-                            divRef.current.style.opacity = 0;
-                        }
-                    }
-                    else{
-                        divRef.current.style.opacity = 0;
-                    }
+                    // console.log(taRef.current.offsetTop, ">", mainWindow.scrollTop,"&&", taRef.current.offsetTop, "<" ,mainWindow.scrollTop ,"+", mainWindow.offsetHeight);
+                    // var xxx = Array.prototype.indexOf.call(divRef.current.parentNode.children, divRef.current)+1
+                    // if (xxx != divRef.current.parentNode.children.length) {if (divRef.current.parentNode.children[xxx].style.opacity != 1) {divRef.current.style.opacity = 0;}} 
+                    // else{divRef.current.style.opacity = 0;}
                 }
             }, 100);
-            window.addEventListener('scroll', HANDLE_Scroll);
-            return () => window.removeEventListener('scroll', HANDLE_Scroll);
-        }, [scrollTop, taHeight]);
+
+            mainWindow.addEventListener('scroll', HANDLE_Scroll);
+            return () => mainWindow.removeEventListener('scroll', HANDLE_Scroll);
+        }, [scrolledTop, taHeight]);
 
         useEffect(() => {/////////////////////////////////////////////////.........setup
             setTaHeight(taRef.current.scrollHeight + 'px') 
@@ -90,11 +94,11 @@ function HomePage() {
         }
     
         return (
-            <div ref={divRef} style={{opacity: 0}} className='Note'>
+            <div ref={divRef} style={{opacity: 0, backgroundColor: props.backgroundColor}} className='Note'>
                 <div>
                     <input className='title' defaultValue={props.title} />
                     <div>
-                        <input className='color' type="color" id="color-picker" defaultValue="#ff0000" />
+                        <input className='color' type="color" id="color-picker" defaultValue={props.backgroundColor} />
                     </div>
                 </div>
                 
@@ -116,7 +120,7 @@ function HomePage() {
     //     });
     //     window.addEventListener('resize', handleResize);
     //     return () => window.removeEventListener('resize', handleResize);
-    // }, [windowWidth,scrollTop]); //For some reason, pwede window.innerWidth dito
+    // }, [windowWidth,scrolledTop]); //For some reason, pwede window.innerWidth dito
    
 
     //////////////////////////////////////// MAIN RETURN ////////////////////////////////////////////////////////
