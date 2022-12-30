@@ -6,6 +6,7 @@ import AboutPage from './Pages/About/About'
 import LoginPage from './Pages/Login/Login'
 import HomePage from './Pages/Home/Home'
 import MainLayoutPage from './Layouts/MainLayout'
+import CookieManPage from './utils/CookieMan'
 
 function App() {
     const [count, setCount] = useState(0)

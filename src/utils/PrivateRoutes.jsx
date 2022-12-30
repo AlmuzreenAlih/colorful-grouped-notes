@@ -1,6 +1,7 @@
 import { Navigate, Outlet } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
+import Cookies from 'universal-cookie';
 
 const PrivateRoutes = () => {
   const [Token, setToken] = useState(false);
@@ -8,7 +9,12 @@ const PrivateRoutes = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get("http://localhost/cgapi/auth/auth.php");
+        const cookies = new Cookies();
+        const TokenSaved = cookies.get('TokenSaved');
+        alert("TokenSave: "+TokenSaved);
+        const res = await axios.post("http://localhost/cgapi/auth/auth.php", {
+          token: TokenSaved
+        });
         console.log(res.data + "");
         setToken(res.data);
       } catch (error) {
@@ -20,6 +26,7 @@ const PrivateRoutes = () => {
     };
     fetchData();
   }, []);
+  // return null;
   return loading ? null : Token ? <Outlet /> : <Navigate to="/login" />;
 //   if (loading) {
 //     return null;

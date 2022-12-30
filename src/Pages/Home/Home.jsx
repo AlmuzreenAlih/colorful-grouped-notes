@@ -1,36 +1,61 @@
-import { useState, useEffect,inputRef } from 'react'
+import { useState, useEffect,inputRef,useCallback } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { useRef } from 'react';
 import React from 'react';
 import './Home.scss'
+import axios from 'axios'
+
 
 function HomePage() {
     ///////////////////////////////////// ITEMS //////////////////////////////////////////////////////////////
+    const [notes,setNotes] = useState([
+        { id: 1, group: 'Group 1', title: 'Note 1', backgroundColor: '#87CEEB', content: 'original' }]);
+    const [notesLoaded, setNotesLoaded] = useState(false);
+  // Fetch data from the API in the component's lifecycle method
+    // useEffect(() => {
+    //     async function fetchData() {
+    //         const apiUrl = 'http://localhost/cgapi/get/getnotes.php';
+    //         const response = await fetch(apiUrl);
+    //         const data1 = await response.json();
+    //         setTimeout(() => {
+    //             setNotes(data1);
+    //             setNotesLoaded(true);
+    //             console.log(data1);
+    //             console.log(notes);
+
+    //             console.log("did some backlog");
+    //           }, 1000);
+    //     }
+    //     fetchData()
+    //     .catch(console.error);
+    // }, []);
+
+    // if (notesLoaded == false) {  return;}
+    // console.log(notes);
     var groups = [
         { id: 1, title: 'Group 1', backgroundColor: 'rgb(190,190,250)' },
         { id: 2, title: 'Group 2', backgroundColor: 'rgb(190,250,190)' },
         { id: 3, title: 'Group 3', backgroundColor: 'rgb(250,190,190)' },
     ];
-    var notes = [
-        { id: 1, group: 'Group 1', title: 'Note 1', backgroundColor: '#87CEEB', content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit sed quidem minima magnam laudantium ad qui alias vel voluptates iste, quod reprehenderit architecto ipsum quibusdam quisquam officiis omnis rem! Ab?' },
-        { id: 2, group: 'Group 1', title: 'Note 2', backgroundColor: '#87CEEB', content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum fugit illo non cum vitae sed dicta dolores? Maxime a explicabo facilis, reiciendis odit doloribus voluptatem.' },
-        { id: 3, group: 'Group 1', title: 'Note 1A', backgroundColor: '#87CEEB', content: 'Lorem ipsum dolor sit amet cLorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum fugit illo non cum vitae sed dicta dolores? Maxime a explicabo facilis, reiciendis odit doloribus voluptatem.o ipsum quibusdam quisquam officiis omnis rem! Ab?' },
-        { id: 4, group: 'Group 1', title: 'Note 1B', backgroundColor: '#87CEEB', content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. SuLorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum fugit illo non cum vitae sed dicta dolores? Maxime a explicabo facilis, reiciendis odit doloribus voluptatem.rem! Ab?' },
-        { id: 1, group: 'Group 2', title: 'Note 1', backgroundColor: '#87CEEB', content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Susciem ipsum dolor sit amet cLorem ipsum dolor sit amet cLorem ipsum dolor sit amet cLorem ipsum dolor sit amet cLorem ipsum dolor sit amet cLorem ipsum dolor sit amet cLorem ipsum dolor sit amet cLorpit sed quidem minima magnam laudantium ad qui alias vel voluptates iste, quod reprehenderit architecto ipsum quibusdam quisquam officiis omnis rem! Ab?' },
-        { id: 2, group: 'Group 2', title: 'Note 2', backgroundColor: '#87CEEB', content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum fugit illo non cum vitae sed dicta dolores? Maxime a explicabo facilis, reiciendis odit doloribus voluptatem.' },
-        { id: 3, group: 'Group 3', title: 'Note 1A', backgroundColor: '#87CEEB', content: 'Lorem ipsum dolor sit amet cLorem ipsum dolor sit amet cLorem ipsum dolor sit amet cLorem ipsum dolor sit amet cLoremfffffffffffffhfghgggggggggggggggg ipsum dolor sit amet consectetur adipisicing elit. Nostrum fugit illo non cum vitae sed dicta dolores? Maxime a explicabo facilis, reiciendis odit doloribus voluptatem.o ipsum quibusdam quisquam officiis omnis rem! Ab?' },
-        { id: 4, group: 'Group 3', title: 'Note 1B', backgroundColor: '#87CEEB', content: 'Lorem ipsum dolor sit amet consectem ipsum dolor sit amet cLorem ipsum dolor sit amet cLorem ipsum dolor sit amet cLorem ipsum dolor sit amet cLoretur adipisicing elit. SuLorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum fugit illo non cum vitae sed dicta dolores? Maxime a explicabo facilis, reiciendis odit doloribus voluptatem.rem! Ab?' },
-        { id: 5, group: 'Group 3', title: 'Note 1B', backgroundColor: '#87CEEB', content: 'Lorem ipsum dolor sit amet consectem ipsum dolor sit amet cLorem ipsum dolor sit amet cLorem ipsum dolor sit amet cLorem ipsum dolor sit amet cLoretur adipisicing elit. SuLorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum fugit illo non cum vitae sed dicta dolores? Maxime a explicabo facilis, reiciendis odit doloribus voluptatem.rem! Ab?' },
-        { id: 6, group: 'Group 3', title: 'Note 1B', backgroundColor: '#87CEEB', content: 'Lorem ipsum dolor sit amet consectem ipsum dolor sit amet cLorem ipsum dolor sit amet cLorem ipsum dolor sit amet cLorem ipsum dolor sit amet cLoretur adipisicing elit. SuLorem ipsudfhfghgfhgfgm dolor sit amet consectetur adipisicing elit. Nostrum fugit illo non cum vitae sed dicta dolores? Maxime a explicabo facilis, reiciendis odit doloribus voluptatem.rem! Ab?' },
-    ];
-
+    // var notes = [
+    //     { id: 1, group: 'Group 1', title: 'Note 1', backgroundColor: '#87CEEB', content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit sed quidem minima magnam laudantium ad qui alias vel voluptates iste, quod reprehenderit architecto ipsum quibusdam quisquam officiis omnis rem! Ab?' },
+    //     { id: 2, group: 'Group 1', title: 'Note 2', backgroundColor: '#87CEEB', content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum fugit illo non cum vitae sed dicta dolores? Maxime a explicabo facilis, reiciendis odit doloribus voluptatem.' },
+    //     { id: 3, group: 'Group 1', title: 'Note 1A', backgroundColor: '#87CEEB', content: 'Lorem ipsum dolor sit amet cLorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum fugit illo non cum vitae sed dicta dolores? Maxime a explicabo facilis, reiciendis odit doloribus voluptatem.o ipsum quibusdam quisquam officiis omnis rem! Ab?' },
+    //     { id: 4, group: 'Group 1', title: 'Note 1B', backgroundColor: '#87CEEB', content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. SuLorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum fugit illo non cum vitae sed dicta dolores? Maxime a explicabo facilis, reiciendis odit doloribus voluptatem.rem! Ab?' },
+    //     { id: 1, group: 'Group 2', title: 'Note 1', backgroundColor: '#87CEEB', content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Susciem ipsum dolor sit amet cLorem ipsum dolor sit amet cLorem ipsum dolor sit amet cLorem ipsum dolor sit amet cLorem ipsum dolor sit amet cLorem ipsum dolor sit amet cLorem ipsum dolor sit amet cLorpit sed quidem minima magnam laudantium ad qui alias vel voluptates iste, quod reprehenderit architecto ipsum quibusdam quisquam officiis omnis rem! Ab?' },
+    //     { id: 2, group: 'Group 2', title: 'Note 2', backgroundColor: '#87CEEB', content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum fugit illo non cum vitae sed dicta dolores? Maxime a explicabo facilis, reiciendis odit doloribus voluptatem.' },
+    //     { id: 3, group: 'Group 3', title: 'Note 1A', backgroundColor: '#87CEEB', content: 'Lorem ipsum dolor sit amet cLorem ipsum dolor sit amet cLorem ipsum dolor sit amet cLorem ipsum dolor sit amet cLoremfffffffffffffhfghgggggggggggggggg ipsum dolor sit amet consectetur adipisicing elit. Nostrum fugit illo non cum vitae sed dicta dolores? Maxime a explicabo facilis, reiciendis odit doloribus voluptatem.o ipsum quibusdam quisquam officiis omnis rem! Ab?' },
+    //     { id: 4, group: 'Group 3', title: 'Note 1B', backgroundColor: '#87CEEB', content: 'Lorem ipsum dolor sit amet consectem ipsum dolor sit amet cLorem ipsum dolor sit amet cLorem ipsum dolor sit amet cLorem ipsum dolor sit amet cLoretur adipisicing elit. SuLorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum fugit illo non cum vitae sed dicta dolores? Maxime a explicabo facilis, reiciendis odit doloribus voluptatem.rem! Ab?' },
+    //     { id: 5, group: 'Group 3', title: 'Note 1B', backgroundColor: '#87CEEB', content: 'Lorem ipsum dolor sit amet consectem ipsum dolor sit amet cLorem ipsum dolor sit amet cLorem ipsum dolor sit amet cLorem ipsum dolor sit amet cLoretur adipisicing elit. SuLorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum fugit illo non cum vitae sed dicta dolores? Maxime a explicabo facilis, reiciendis odit doloribus voluptatem.rem! Ab?' },
+    //     { id: 6, group: 'Group 3', title: 'Note 1B', backgroundColor: '#87CEEB', content: 'Lorem ipsum dolor sit amet consectem ipsum dolor sit amet cLorem ipsum dolor sit amet cLorem ipsum dolor sit amet cLorem ipsum dolor sit amet cLoretur adipisicing elit. SuLorem ipsudfhfghgfhgfgm dolor sit amet consectetur adipisicing elit. Nostrum fugit illo non cum vitae sed dicta dolores? Maxime a explicabo facilis, reiciendis odit doloribus voluptatem.rem! Ab?' },
+    // ];
     /////////////////////////////////// PARTIALS ////////////////////////////////////////////////////////////
     //Main-------------------------------------------------------------------------------------------------------
-    function MainComponent() {
+    function MainComponent(props) {
         return (
             <div className="AllNotes">
             {groups.map(group => (
-                <NoteGroupComponent key={group.id} backgroundColor={group.backgroundColor} title={group.title} />
+                <NoteGroupComponent key={group.id} backgroundColor={group.backgroundColor} title={group.title} notes={props.notes}/>
                 ))}
                 
             </div>
@@ -44,7 +69,7 @@ function HomePage() {
         return (
             <div className="NoteGroup" style={{backgroundColor: props.backgroundColor}}>
                 <input onChange={GroupTitleChange} value={props.title} />
-                {notes.filter((note) => note.group == props.title)
+                {props.notes.filter((note) => note.group == props.title)
                     .map(note => (
                         <NoteComponent key={note.id} backgroundColor={note.backgroundColor} title={note.title} content={note.content} />
                 ))}
@@ -162,8 +187,7 @@ function HomePage() {
 
     //////////////////////////////////////// MAIN RETURN ////////////////////////////////////////////////////////
     return (
-        <MainComponent />
-        
+        <MainComponent notes={notes}/>
     );
 }
 

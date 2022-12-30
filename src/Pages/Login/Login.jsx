@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import $ from 'jquery'
 import axios from 'axios'
 import './Login.scss'
-// window.location.replace('http://auth.w3schools.com');
+import Cookies from 'universal-cookie';
 
 import InputBlock from './InputBlock'
 import { Link } from 'react-router-dom'
@@ -34,13 +34,20 @@ function LoginPage() {
             ).
             then(response => {
                 setShowProgress("hidden");
-                if (response.data == true) {
-                    window.location.replace('/');
+                if (response.data == false) {
+                    alert("Incorrect");
                 }
                 else {
-                    console.log("Login error");
+                    alert(response.data);
+                    const cookies = new Cookies();
+                    cookies.set('TokenSaved', response.data, { path: '/' });
+                    window.location.replace('/');
                 }
             });
+    }
+
+    function inputChanged(e) {
+
     }
     return (
         <div>
@@ -49,7 +56,7 @@ function LoginPage() {
                 <defs>
                 <filter id="shadow">
                     <feDropShadow dx="0" dy="0" stdDeviation="1.5" 
-                    flood-color="#fc6767"/>
+                    floodColor="#fc6767"/>
                 </filter>
                 </defs>
                 <circle id="spinner" style={{fill:"transparent",stroke:"#dd2476",strokeWidth: "7px",strokeLinecap: "round",filter:"url(#shadow)"}} cx="50" cy="50" r="45"/>
@@ -62,8 +69,8 @@ function LoginPage() {
             <form className="LoginForm" method="post">
                 <h1>Login</h1>
                 <InputBlock name="email" 
-                            pattern="^[A-Za-z0-9]{3,16}$" value="admin@gmail.com" label="Email" />
-                <InputBlock name="password" value="admin" label="Password" />
+                            pattern="^[A-Za-z0-9]{3,16}$" value="admin@gmail.com" label="Email" changed={inputChanged} />
+                <InputBlock name="password" value="admin" label="Password" changed={inputChanged} />
                 <button type="button" onClick={SubmittedFunction}>Submit</button>
                 <Link>Register here</Link>
             </form>
