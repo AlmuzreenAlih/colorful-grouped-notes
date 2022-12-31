@@ -8,8 +8,7 @@ import axios from 'axios'
 
 function HomePage() {
     ///////////////////////////////////// ITEMS //////////////////////////////////////////////////////////////
-    const [notes,setNotes] = useState([
-        { id: 1, group: 'Group 1', title: 'Note 1', backgroundColor: '#87CEEB', content: 'original' }]);
+    const [notes,setNotes] = useState([null]);
     const [notesLoaded, setNotesLoaded] = useState(false);
   // Fetch data from the API in the component's lifecycle method
     // useEffect(() => {
@@ -29,8 +28,34 @@ function HomePage() {
     //     fetchData()
     //     .catch(console.error);
     // }, []);
+    
+    useEffect(() => {
+        fetch('http://localhost/cgapi/get/getnotes.php')
+        .then((res)=>res.json())
+        .then((data)=>{
+            setNotes(data);
+            // console.log(notes);
+            setNotesLoaded(true);
+            console.log(notes);
+            
+        })
+    }, []);
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //       try {
+    //         const res = await axios.get("http://localhost/cgapi/get/getnotes.php");
+    //         setNotes(res.data);
+    //       } catch (error) {
+    //         console.error(error);
+    //         setNotesLoaded(true);
+    //       } finally {
+    //         setNotesLoaded(true);
+    //       }
+    //     };
+    //     fetchData();
+    //   }, []);
 
-    // if (notesLoaded == false) {  return;}
+    if (notesLoaded == false) {return;}
     // console.log(notes);
     var groups = [
         { id: 1, title: 'Group 1', backgroundColor: 'rgb(190,190,250)' },

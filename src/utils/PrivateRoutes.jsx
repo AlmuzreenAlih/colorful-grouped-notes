@@ -10,7 +10,8 @@ const PrivateRoutes = () => {
     const fetchData = async () => {
       try {
         const cookies = new Cookies();
-        const TokenSaved = cookies.get('TokenSaved');
+        var TokenSaved = cookies.get('TokenSaved');
+        if (TokenSaved == undefined) {TokenSaved=" ";}
         alert("TokenSave: "+TokenSaved);
         const res = await axios.post("http://localhost/cgapi/auth/auth.php", {
           token: TokenSaved
