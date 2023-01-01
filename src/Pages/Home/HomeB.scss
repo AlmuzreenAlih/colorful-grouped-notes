@@ -1,0 +1,124 @@
+.AllNotes {
+    background-color: transparent;
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    height: 100%;
+    width: 100%;
+}
+
+.NoteGroup {
+    background-color: blue;
+    display: flex;
+    justify-content: start;
+    height: 100%;
+    width: 300px;
+    padding: 1em;
+
+    border: 1px solid #888;
+    box-shadow: 0 3px 5px 0 rgba(0,0,0,0.5);
+
+    overflow: auto;
+    input {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}
+
+.Note {
+    background-color: lightblue;
+    display: flex;
+    align-items: start;
+    justify-content: flex-start;
+    border: 1px solid #888;
+    border-radius: 8px;
+    box-shadow: 0 3px 5px 0 rgba(0,0,0,0.5);
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 0;
+    opacity: 1;
+    transition: opacity 3s;
+    div {
+        background-color: transparent;
+        display: flex;
+        align-items: center;
+        justify-content: start;
+        flex-direction: row;
+        position: relative;
+        width: 100%;
+        margin-bottom: 3px;
+        height: 1rem;
+
+        .title  {
+            position: absolute;
+            top: 50%;
+            transform: translate(0%,-50%);
+            height: 1rem;
+            font-weight: 700;
+            background-color: transparent;
+            border: 0px;
+            width: calc(100% - 2rem);
+        }
+
+        span {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            visibility: hidden;
+            position: absolute;
+            top: 50%;
+            transform: translate(0%,-50%);
+            width: 1rem;
+            height: 1rem;
+            right: 1rem;
+            border-radius: 50%;
+            border: 0px solid black;
+            background-color: transparent;
+            background-image: url('./color.ico');
+            background-size: cover;
+
+            input {
+                height: 1rem;
+                width: 1rem;
+                opacity: 0;
+                visibility: visible;
+                border: 0;
+                outline: none;
+                position: absolute;
+                top: 50%;
+                transform: translate(0%,-50%);
+            }
+        }
+
+        input:focus{
+            outline: none;
+        }
+
+        .span2 {
+            position: absolute;
+            right: 0;
+            height: 1rem;
+            width: 1rem;
+            background-color: transparent;
+            background-image: url('./delete.png');
+            outline: none;
+            background-size: cover;
+            border: 0px; 
+            box-shadow: 0;
+        }
+    }
+
+    textarea {
+        background-color: transparent;
+        width: 100%;
+        padding: 2px;
+        height: auto;
+        border: 0px;
+        overflow: hidden;
+        resize: none;
+    }
+
+    textarea:focus, input:focus{
+        outline: none;
+    }
+}

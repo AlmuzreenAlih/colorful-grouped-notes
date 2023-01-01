@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import PrivateRoutes from "./utils/PrivateRoutes"
 import AboutPage from './Pages/About/About'
 import LoginPage from './Pages/Login/Login'
-import HomePage from './Pages/Home/Home'
+import HomePage from './Pages/Home/HomeB'
 import MainLayoutPage from './Layouts/MainLayout'
 
 function App() {
