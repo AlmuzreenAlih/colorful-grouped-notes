@@ -7,22 +7,111 @@
     width: 100%;
 }
 
+// .NoteGroup {
+//     background-color: blue;
+//     display: flex;
+//     justify-content: start;
+//     height: 100%;
+//     width: 300px;
+//     position: relative;
+//     padding: 1em;
+
+//     border: 1px solid #888;
+//     box-shadow: 0 3px 5px 0 rgba(0,0,0,0.5);
+
+//     overflow: auto;
+//     input {
+//         // height: 20%;
+//         width: 100%;
+//         margin-bottom: 10px;
+//     }
+
+//     div {
+//         // overflow: auto;
+//         // background-color: #23c483;
+//         // height: 60%;
+//     }
+//     button {
+//         // padding: 0em 3em;
+//         height: 50px;
+//         width: 150px;
+//         visibility: visible;
+//         font-size: 15px;
+//         text-transform: uppercase;
+//         // letter-spacing: 2.5px;
+//         font-weight: 500;
+//         color: #000;
+//         background-color: #fff;
+//         border: none;
+//         border-radius: 45px;
+//         box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+//         transition: all 0.3s ease 0s;
+//         cursor: pointer;
+//         outline: none;
+        
+//         position: sticky;
+//         bottom: 10px;
+//         left: 50%;
+//         transform: translate(-50%,0);
+//       }
+      
+//       button:hover {
+//         background-color: #23c483;
+//         box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
+//         color: #fff;
+//         transform: translate(-50%,-7px);
+//       }
+      
+//       button:active {
+//         transform: translate(-50%,-1px);
+//       }
+// }
+
 .NoteGroup {
-    background-color: blue;
     display: flex;
+    align-items: center;
     justify-content: start;
     height: 100%;
-    width: 300px;
-    padding: 1em;
-
-    border: 1px solid #888;
-    box-shadow: 0 3px 5px 0 rgba(0,0,0,0.5);
-
-    overflow: auto;
-    input {
-        width: 100%;
-        margin-bottom: 10px;
+    
+    .GroupTitle {
+        background-color: transparent;
+        border: none;
+        outline: none;
+        padding: 10px;
+        height: 6%;
     }
+
+    .Scrollable-Notes {
+        background-color: transparent;
+        display: flex;
+        justify-content: start;
+        
+        position: relative;
+        max-height:86%;
+        width:90%;
+        overflow: auto; 
+        scrollbar-color: yellow;
+        margin-bottom: 2%;
+    }
+
+    .button-div {
+        background-color: yellow;
+        width: 80%;
+        height: 6%;
+        transition: opacity 3s;
+    }
+    
+    // .Scrollable-Notes::-webkit-scrollbar {
+    //     width: 6px; /* Set the width of the scrollbar */
+    //   }
+      
+    //   .Scrollable-Notes::-webkit-scrollbar-thumb {
+    //     background-color: yellow; /* Set the color of the scrollbar thumb */
+    //   }
+      
+      .Scrollable-Notes:hover {
+        scrollbar-color: black; /* Set the color of the scrollbar thumb on hover */
+      }
 }
 
 .Note {
@@ -33,11 +122,11 @@
     border: 1px solid #888;
     border-radius: 8px;
     box-shadow: 0 3px 5px 0 rgba(0,0,0,0.5);
-    width: 100%;
+    width: 90%; //haha
     padding: 10px;
-    margin-bottom: 0;
-    opacity: 1;
-    transition: opacity 3s;
+    margin: 5px;
+    // opacity: 1; NO NEED
+    transition: opacity 2s;
     div {
         background-color: transparent;
         display: flex;
