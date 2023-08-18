@@ -3,6 +3,7 @@ import { useRef } from 'react';
 import React from 'react';
 import './HomeB.scss'
 import axios from 'axios'
+import Cookies from 'universal-cookie';
 
 
 function HomePage() {
@@ -70,7 +71,6 @@ function HomePage() {
         //     return () => mainWindow.removeEventListener('scroll', HANDLE_Scroll);
         // }, []);
 
-        const button_div_ref = useRef(null); 
         const [button_div_ref_opac, set_button_div_ref_opac] = useState(0); 
         useEffect(() => {
             set_button_div_ref_opac(1)
@@ -86,7 +86,7 @@ function HomePage() {
                                 <NoteComponent key={note.id} id={note.id} backgroundColor={note.backgroundColor} title={note.title} content={note.content} />
                         ))}
                     </div>
-                    <button ref={button_div_ref} className='button-div' style={{opacity: button_div_ref_opac}}>
+                    <button className='button-div' style={{opacity: button_div_ref_opac}}>
                         Add New Note +
                     </button>
                     
@@ -164,27 +164,45 @@ function HomePage() {
                 callAPI({ ...notevals, [name]: value });
             }, 3000);
         }
+        function CHANGED_NoteColor(e) {
+            const { name, value } = e.target;
+            // divRef.current.style.backgroundColor = value;
+            setNoteColor(value)
+            setnotevals(prevNotevals => ({ ...prevNotevals, [name]: value }));
 
+            clearTimeout(timerRef.current); //Clear then start
+            timerRef.current = setTimeout(() => {
+                callAPI({ ...notevals, [name]: value });
+            }, 3000);
+        }
 
         function callAPI(updatedValues) {
             console.log(updatedValues)
-
+            const cookies = new Cookies();
+            const tokenSaved = cookies.get('TokenSaved');
+            // // Include the token in the request headers
+            const cleanedToken = tokenSaved.trim();
+            // const config = {
+            //     headers: {
+            //         'Authorization': `Bearer ${cleanedToken}`,
+            //         'Content-Type': 'application/json',
+            //     },
+            // };
             axios.post("http://localhost/cgapi/get/updateanote.php",{
-                id: updatedValues.id,
+                token: cleanedToken,
+                id: updatedValues.id, // KAHIT hindi na-specify yung id sa mga elements, pwede pa rin ito. Ang lahat ng functions sa component ay nadedefine ulit on each iteration ng mapping
                 title: updatedValues.title,
                 backgroundColor: updatedValues.backgroundColor,
                 content: updatedValues.content,
             }
             ).
             then(response => {
+                console.log(response.data);
                 if (response.data == false) {
                     alert("Incorrect");
                 }
                 else {
-                    alert(response.data);
-                    const cookies = new Cookies();
-                    cookies.set('TokenSaved', response.data, { path: '/' });
-                    window.location.replace('/');
+                    alert("Success");
                 }
             });
 
@@ -197,23 +215,24 @@ function HomePage() {
         const ColorRef = useRef(null);
         const DeleteRef = useRef(null);
         const NoteTitleRef = useRef(null);
-        const [NoteIdTobeChanged, setNoteIdTobeChanged] = useState(-1)
+        const [NoteColor, setNoteColor] = useState(props.backgroundColor)
 
         return (
-            <div ref={divRef} style={{opacity: 0, backgroundColor: props.backgroundColor}} className='Note'
+            <div ref={divRef} style={{opacity: 0, backgroundColor: NoteColor}} className='Note'
                  onMouseEnter={()=>{ColorRef.current.style.visibility = "visible"; DeleteRef.current.style.visibility = "visible";}}
                  onMouseLeave={()=>{ColorRef.current.style.visibility = "hidden"; DeleteRef.current.style.visibility = "hidden";}}>
                 <div>
                     <input ref={NoteTitleRef} name="title" className='title' defaultValue={props.title} 
-                     onChange={e=> CHANGED_NoteTitle(e)} />
+                           onChange={e=>CHANGED_NoteTitle(e)} />
                     <span ref={ColorRef} style={{visibility: "hidden"}}>
-                        <input className='color' type="color" id="color-picker" defaultValue={props.backgroundColor} />
+                        <input name="backgroundColor" className='color' type="color" id="color-picker" defaultValue={props.backgroundColor} 
+                               onChange={e=>CHANGED_NoteColor(e)}/>
                     </span>
                     <span ref={DeleteRef} style={{visibility: "hidden"}} className='span2'></span>             
                 </div>
-                <textarea data-noteid={props.id} ref={taRef} name="content" spellCheck="false" defaultValue={props.content} 
+                <textarea ref={taRef} name="content" spellCheck="false" defaultValue={props.content} 
                 // onChange={()=> {taHeight = taRef.scrollHeight + 'px';}} //YOU CAN'T DO THIS, USEREFS AND STATES ARE CONST
-                 onChange={e=> CHANGED_Note(e) + CHANGED_TextArea(e)}
+                 onChange={e=>CHANGED_Note(e) + CHANGED_TextArea(e)}
                  style={{height: taHeight}} />
             </div>
         )
