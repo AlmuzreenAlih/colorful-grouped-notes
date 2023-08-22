@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "http://localhost/reactor/",
+  "homepage": "http://localhost/",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

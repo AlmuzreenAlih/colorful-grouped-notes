@@ -95,10 +95,13 @@
     }
 
     .button-div {
-        background-color: yellow;
+        background-color: #041b50;
+        color:white;
+        font-weight: normal;
         width: 80%;
         height: 6%;
         transition: opacity 3s;
+        border-width: 0;
     }
     
     // .Scrollable-Notes::-webkit-scrollbar {
@@ -149,52 +152,103 @@
             width: calc(100% - 2rem);
         }
 
-        span {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            visibility: hidden;
+        .span1 {
             position: absolute;
             top: 50%;
+            right:1.1rem;
             transform: translate(0%,-50%);
-            width: 1rem;
-            height: 1rem;
-            right: 1rem;
-            border-radius: 50%;
-            border: 0px solid black;
+            height: 11px;
+            width: 11px;
+            font-weight: 700;
             background-color: transparent;
-            background-image: url('./color.ico');
+            border: 0px;
+            margin: 0;
+            padding:0;
+            background-image: url('./color234.png');
             background-size: cover;
-
             input {
-                height: 1rem;
-                width: 1rem;
-                opacity: 0;
-                visibility: visible;
-                border: 0;
-                outline: none;
                 position: absolute;
-                top: 50%;
-                transform: translate(0%,-50%);
+                top: 0%;
+                left: 0%;
+                width:100%;
+                height:100%;
+                opacity: 0;
             }
-        }
-
-        input:focus{
-            outline: none;
         }
 
         .span2 {
             position: absolute;
+            top: 50%;
             right: 0;
-            height: 1rem;
-            width: 1rem;
+            transform: translate(0%,-50%);
+            height: 13px;
+            width: 13px;
+            font-weight: 700;
             background-color: transparent;
+            border: 0px;
+            margin: 0;
+            padding:0;
             background-image: url('./delete.png');
-            outline: none;
             background-size: cover;
-            border: 0px; 
-            box-shadow: 0;
+            // input {
+            //     position: absolute;
+            //     top: 0%;
+            //     left: 0%;
+            //     width:100%;
+            //     height:100%;
+            //     opacity: 0;
+            // }
         }
+
+        
+
+        // span {
+        //     display: flex;
+        //     align-items: center;
+        //     justify-content: center;
+        //     visibility: hidden;
+        //     position: absolute;
+        //     top: 50%;
+        //     transform: translate(0%,-50%);
+        //     width: 1rem;
+        //     height: 1rem;
+        //     right: 1rem;
+        //     border-radius: 50%;
+        //     border: 0px solid black;
+        //     background-color: transparent;
+        //     background-image: url('./col.png');
+        //     background-size: cover;
+            
+        //     input {
+        //         height: 1rem;
+        //         width: 1rem;
+        //         opacity: 0;
+        //         visibility: visible;
+        //         border: 0;
+        //         outline: none;
+        //         position: absolute;
+        //         top: 50%;
+        //         transform: translate(0%,-50%);
+        //     }
+        // }
+
+        // input:focus{
+        //     outline: none;
+        // }
+
+        // .span2 {
+        //     position: absolute;
+        //     right: 0;
+        //     height: 1rem;
+        //     width: 1rem;
+        //     background-color: transparent;
+        //     background-image: url('./delete.png');
+        //     outline: none;
+        //     background-size: cover;
+        //     border: 0px; 
+        //     box-shadow: 0;
+        //     margin-left: 50px;
+        // }
     }
 
     textarea {

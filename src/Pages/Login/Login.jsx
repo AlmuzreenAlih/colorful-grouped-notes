@@ -7,6 +7,7 @@ import Cookies from 'universal-cookie';
 
 import InputBlock from './InputBlock'
 import { Link } from 'react-router-dom'
+import React from 'react'
 
 function LoginPage() {
     console.log("refreshed")
@@ -38,11 +39,15 @@ function LoginPage() {
 
     }
 
+    console.log()
+
     const SubmittedFunction = () => {
         console.log(inputValues.email)
 
         setShowProgress("");
-        axios.post("http://localhost/cgapi/auth/login.php",{
+        let homeorigin = "http://localhost/cgapi"
+        homeorigin = window.location.origin
+        axios.post(homeorigin+"/auth/login.php",{
                 email: inputValues.email,
                 password: inputValues.password,}
             ).
@@ -76,7 +81,7 @@ function LoginPage() {
             </span>
 
             <span className="MainPanel">
-                <img src="src\assets\img\316243177_854245752381535_6906148811205586753_n.jpg" alt="" />
+                <img src="{{'./assets/img/316243177_854245752381535_6906148811205586753_n.jpg' | asset_url}}" alt="" />
                 <form className="LoginForm" method="post">
                     <h1>Login</h1>
                     <InputBlock name="email" pattern="^[A-Za-z0-9]{3,16}$" 

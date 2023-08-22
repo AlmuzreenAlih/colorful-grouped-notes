@@ -13,7 +13,9 @@ const PrivateRoutes = () => {
         var TokenSaved = cookies.get('TokenSaved');
         if (TokenSaved == undefined) {TokenSaved=" ";}
         // alert("TokenSave: "+TokenSaved);
-        const res = await axios.post("http://localhost/cgapi/auth/auth.php", {
+        let homeorigin = "http://localhost/cgapi"
+        homeorigin = window.location.origin
+        const res = await axios.post(homeorigin+"/auth/auth.php", {
           token: TokenSaved
         });
         console.log(res.data + "");
